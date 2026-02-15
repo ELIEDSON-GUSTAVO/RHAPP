@@ -5,7 +5,7 @@
   "description": "App de RH com Electron e SQLite",
   "type": "module",
   "author": "ELIEDSON GUSTAVO",
-  "main": "./main.cjs",
+  "main": "dist/main.cjs",
   "homepage": "./",
   "scripts": {
     "dev": "vite",
@@ -96,10 +96,7 @@
     "appId": "com.rhapp.app",
     "productName": "RHAPP",
     "win": {
-      "target": [
-        "nsis",
-        "portable"
-      ],
+      "target": "portable",
       "icon": "public/icon.ico"
     },
     "nsis": {

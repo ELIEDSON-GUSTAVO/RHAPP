@@ -71,10 +71,27 @@ function createWindow() {
     startUrl = 'http://localhost:5173/RHAPP/';
     console.log('[DEV] Loading URL:', startUrl);
   } else {
-    const distPath = path.join(__dirname, 'dist', 'index.html');
-    startUrl = `file://${distPath}`;
+    // Quando empacotado, main.cjs estará em dist/ (ou node_modules/.bin/)
+    // Procurar index.html nos locais possíveis
+    const possiblePaths = [
+      path.join(__dirname, 'dist', 'index.html'),
+      path.join(__dirname, '..', 'dist', 'index.html'),
+      path.join(__dirname, 'index.html'),
+      path.join(process.resourcesPath, 'dist', 'index.html'),
+    ];
+    
+    let indexPath = possiblePaths[0];
+    for (const p of possiblePaths) {
+      if (require('fs').existsSync(p)) {
+        indexPath = p;
+        console.log('[PROD] Found index.html at:', p);
+        break;
+      }
+    }
+    
+    startUrl = `file://${indexPath}`;
     console.log('[PROD] Loading URL:', startUrl);
-    console.log('[PROD] File exists:', require('fs').existsSync(distPath));
+    console.log('[PROD] All checked paths:', possiblePaths);
   }
 
   mainWindow.loadURL(startUrl);
