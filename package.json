@@ -5,7 +5,7 @@
   "description": "App de RH com Electron e SQLite",
   "type": "module",
   "author": "ELIEDSON GUSTAVO",
-  "main": "public/main.cjs",
+  "main": "./main.cjs",
   "homepage": "./",
   "scripts": {
     "dev": "vite",
@@ -107,6 +107,12 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true
     },
+    "files": [
+      "dist/**/*",
+      "main.cjs",
+      "preload.cjs",
+      "package.json"
+    ],
     "directories": {
       "buildResources": "public"
     }
