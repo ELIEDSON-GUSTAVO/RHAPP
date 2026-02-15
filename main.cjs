@@ -1,10 +1,12 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
-const isDev = require('electron-is-dev');
 
 let mainWindow;
 let db;
+
+// Detectar modo desenvolvimento
+const isDev = !app.isPackaged;
 
 // Inicializar banco de dados SQLite
 function initializeDatabase() {
