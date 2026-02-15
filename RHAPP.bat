@@ -14,8 +14,6 @@ if errorlevel 1 (
     echo Por favor instale Node.js em:
     echo https://nodejs.org/
     echo.
-    echo Depois execute este arquivo novamente.
-    echo.
     pause
     exit /b 1
 )
@@ -24,6 +22,7 @@ REM Verificar se é primeira vez ou se faltam dependências
 if not exist "node_modules" (
     echo.
     echo Instalando dependencias (primeira vez)...
+    echo Isto pode levar alguns minutos...
     echo.
     call npm install
     if errorlevel 1 (
@@ -33,16 +32,37 @@ if not exist "node_modules" (
     )
 )
 
-REM Iniciar servidor Vite
+REM Iniciar servidor Vite em background
 echo.
 echo =====================================
 echo Iniciando RHAPP...
 echo =====================================
 echo.
-echo Porta: 5173
+
+REM Matar processos anteriores da porta 5173
+taskkill /F /FI "WINDOWTITLE eq*vite*" >nul 2>&1
+
+REM Iniciar o servidor Vite em background
+start "" cmd /C "npm run dev"
+
+REM Aguardar o servidor iniciar
+echo Aguardando servidor iniciar...
+timeout /t 5 /nobreak >nul
+
+REM Abrir navegador
+echo Abrindo navegador...
+start http://localhost:5173/RHAPP/
+
+echo.
+echo =====================================
+echo RHAPP rodando com sucesso!
+echo =====================================
+echo.
 echo URL: http://localhost:5173/RHAPP/
 echo.
-echo Para parar, pressione: CTRL + C
+echo O navegador deve abrir automaticamente.
+echo Se nao abrir, acesse manualmente a URL acima.
 echo.
-
-call npm run dev
+echo Para parar o servidor, feche a janela Vite.
+echo.
+pause
