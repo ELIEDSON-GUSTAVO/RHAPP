@@ -1,0 +1,160 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Tema escuro com vermelho - baseado no modelo Streamlit */
+    --background: 0 0% 12%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 15%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 15%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 0 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 18%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 0 100% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 25%;
+    --input: 0 0% 20%;
+    --ring: 0 100% 50%;
+    --radius: 0.625rem;
+    --sidebar-background: 0 0% 10%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 0 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 18%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 25%;
+    --sidebar-ring: 0 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+@layer components {
+  /* Card de métrica estilo Streamlit */
+  .metric-card {
+    @apply rounded-xl p-4 text-center;
+    background: linear-gradient(135deg, #2D2D2D 0%, #1E1E1E 100%);
+    border: 1px solid #FF0000;
+  }
+  
+  /* Botão primário estilo Streamlit */
+  .btn-primary {
+    @apply px-4 py-2 rounded-lg font-bold text-white transition-all duration-300;
+    background: linear-gradient(135deg, #FF0000 0%, #CC0000 100%);
+  }
+  
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #CC0000 0%, #990000 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+  }
+  
+  /* Card de departamento */
+  .dept-card {
+    @apply rounded-xl p-4 transition-all duration-300 cursor-pointer;
+    border: 2px solid;
+  }
+  
+  .dept-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(255, 0, 0, 0.2);
+  }
+  
+  /* Scrollbar personalizada */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #1E1E1E;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #FF0000;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #CC0000;
+  }
+  
+  /* Animações */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+  
+  /* Input estilizado */
+  .input-dark {
+    @apply bg-[#2D2D2D] border border-[#444] rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-[#FF0000] focus:ring-1 focus:ring-[#FF0000] transition-all;
+  }
+  
+  /* Tabela estilizada */
+  .table-dark {
+    @apply w-full;
+  }
+  
+  .table-dark th {
+    @apply bg-[#2D2D2D] text-left py-3 px-4 font-semibold text-gray-300 border-b border-[#444];
+  }
+  
+  .table-dark td {
+    @apply py-3 px-4 border-b border-[#333];
+  }
+  
+  .table-dark tr:hover td {
+    @apply bg-[#252525];
+  }
+}
+
+/* Override de componentes shadcn para tema escuro */
+[data-slot="card"] {
+  @apply bg-[#1E1E1E] border-[#333];
+}
+
+[data-slot="dialog-content"] {
+  @apply bg-[#1E1E1E] border-[#333];
+}
+
+[data-slot="select-trigger"] {
+  @apply bg-[#2D2D2D] border-[#444] text-white;
+}
+
+[data-slot="select-content"] {
+  @apply bg-[#2D2D2D] border-[#444];
+}
+
+[data-slot="input"] {
+  @apply bg-[#2D2D2D] border-[#444] text-white placeholder:text-gray-500;
+}
+
+[data-slot="button"] {
+  @apply font-medium;
+}
