@@ -1,6 +1,5 @@
 @echo off
-setlocal enabledelayedexpansion
-
+chcp 65001 >nul
 REM Mudar para o diretório do app
 cd /d "%~dp0"
 
@@ -26,7 +25,7 @@ if not exist "node_modules" (
     echo.
     echo Instalando dependencias (primeira vez)...
     echo.
-    npm install
+    call npm install
     if errorlevel 1 (
         echo Erro ao instalar dependencias!
         pause
@@ -34,33 +33,16 @@ if not exist "node_modules" (
     )
 )
 
-REM Iniciar servidor Vite em background
+REM Iniciar servidor Vite
 echo.
 echo =====================================
 echo Iniciando RHAPP...
 echo =====================================
 echo.
-
-start /B cmd /c npm run dev
-
-REM Aguardar o servidor iniciar
-timeout /t 4 /nobreak >nul
-
-REM Obter URL
-set PORT=5173
-set URL=http://localhost:%PORT%/RHAPP/
-
-REM Abrir navegador
-echo Abrindo navegador em %URL%...
-start %URL%
-
+echo Porta: 5173
+echo URL: http://localhost:5173/RHAPP/
 echo.
-echo =====================================
-echo RHAPP rodando com sucesso!
-echo =====================================
+echo Para parar, pressione: CTRL + C
 echo.
-echo URL: %URL%
-echo.
-echo Para parar o servidor, feche esta janela
-echo.
-pause
+
+call npm run dev
