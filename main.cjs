@@ -66,11 +66,32 @@ function createWindow() {
     },
   });
 
-  const startUrl = isDev
-    ? 'http://localhost:5173/RHAPP/'
-    : `file://${path.join(__dirname, '../dist/index.html')}`;
+  let startUrl;
+  if (isDev) {
+    startUrl = 'http://localhost:5173/RHAPP/';
+    console.log('[DEV] Loading URL:', startUrl);
+  } else {
+    const distPath = path.join(__dirname, 'dist', 'index.html');
+    startUrl = `file://${distPath}`;
+    console.log('[PROD] Loading URL:', startUrl);
+    console.log('[PROD] File exists:', require('fs').existsSync(distPath));
+  }
 
   mainWindow.loadURL(startUrl);
+
+  // Error handlers
+  mainWindow.webContents.on('crashed', () => {
+    console.error('Windows crashed!');
+  });
+
+  mainWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
+    console.error('Load failed:', errorCode, errorDescription);
+    mainWindow.webContents.openDevTools();
+  });
+
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
 
   if (isDev) {
     mainWindow.webContents.openDevTools();
